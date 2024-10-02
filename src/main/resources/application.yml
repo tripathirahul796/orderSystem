@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://user:<db_pwd>@<hostname>/<db>
+  application:
+    name: ordersystem
+
+
+
