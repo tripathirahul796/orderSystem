@@ -4,6 +4,9 @@ spring:
       uri: mongodb+srv://user:<db_pwd>@<hostname>/<db>
   application:
     name: ordersystem
+  profiles:
+    active:
+      - local
 
 
 

@@ -1,9 +1,14 @@
 package com.rahul.ordersystem.infrastructure.repository.interfaces
 
-import com.rahul.ordersystem.entities.Products
-import org.springframework.data.mongodb.repository.MongoRepository
+import com.rahul.ordersystem.entities.Product
+import org.springframework.data.repository.reactive.ReactiveCrudRepository
+import org.springframework.stereotype.Repository
+import reactor.core.publisher.Mono
 
-interface ProductRepo : MongoRepository<Products, Int> {
+@Repository
+interface ProductRepo : ReactiveCrudRepository<Product, Int> {
 
-    fun findItemByCategoryName(categoryName : String) : Products?
+    fun findItemByCategoryName(categoryName : String) : Mono<Product>?
 }
+
+
