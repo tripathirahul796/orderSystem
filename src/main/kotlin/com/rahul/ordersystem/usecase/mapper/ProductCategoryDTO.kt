@@ -1,6 +1,6 @@
 package com.rahul.ordersystem.usecase.mapper
 
-import com.rahul.ordersystem.entities.Product
+import com.rahul.ordersystem.entities.domain.model.Product
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 
