@@ -10,6 +10,8 @@ data class ProductRequestDTO(
 )
 
 data class ItemRequestDTO(
+    @field : JsonProperty("itemId")
+    val itemId : String? = null,
     @field : JsonProperty("itemName")
     val itemName: String? = null,
     @field : JsonProperty("price")

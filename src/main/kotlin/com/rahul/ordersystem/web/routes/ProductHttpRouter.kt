@@ -14,11 +14,10 @@ class ProductHttpRouter(
         "/product".nest {
             accept(MediaType.APPLICATION_JSON).nest {
                 GET("/", productHandler::getAllProducts)
-                GET("/{productId}",productHandler::getProduct)
+                GET("/{productId}", productHandler::getProduct)
 //                GET("/category", productHandler::getAllCategory)
-                POST("/createProduct",productHandler::createUpdateProduct)
-
-//                DELETE("/delete/{productId}",productHandler::deleteProduct)
+                POST("/createProduct", productHandler::createUpdateProduct)
+                DELETE("/delete/{productId}", productHandler::deleteProduct)
             }
         }
     }

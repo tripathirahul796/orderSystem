@@ -1,8 +1,8 @@
 package com.rahul.ordersystem.web.handler
 
 import com.rahul.ordersystem.application.service.ProductService
-import com.rahul.ordersystem.web.model.ProductRequest
 import com.rahul.ordersystem.web.mapper.ProductRequestDTOMapper
+import com.rahul.ordersystem.web.model.ProductRequest
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
@@ -27,7 +27,7 @@ class ProductHandler(@Autowired val productService: ProductService) {
     }
 
     fun getProduct(serverRequest: ServerRequest): Mono<ServerResponse> {
-        return serverRequest.let {
+        return serverRequest.let { it ->
             val productId = it.pathVariable("productId")
             productService.getProduct(productId).flatMap {
                 ServerResponse
@@ -36,7 +36,7 @@ class ProductHandler(@Autowired val productService: ProductService) {
             }.doOnError {
                 logger.error("No Record found for productId $productId")
             }
-        }.log()
+        }
     }
 
     fun createUpdateProduct(serverRequest: ServerRequest): Mono<ServerResponse> {
@@ -49,34 +49,33 @@ class ProductHandler(@Autowired val productService: ProductService) {
                     .ok()
                     .contentType(MediaType.APPLICATION_JSON)
                     .bodyValue(res)
-            }.doOnError {
-                logger.error("Error occurred while creating product " + serverRequest.uri())
-            }.log()
+            }.doOnNext {
+                logger.info("Product created successfully !!")
+            }
+                .doOnError {
+                    logger.error("Error occurred while creating product " + serverRequest.uri())
+                    ServerResponse
+                        .badRequest()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .bodyValue(it)
+                }
         }
     }
 
-//    fun updateProduct(serverRequest: ServerRequest): Mono<ServerResponse> {
-//        return serverRequest.let {
-//            val newProduct = it.bodyToMono(ProductRequest::class.java)
-//            newProduct.flatMap { el ->
-//                productService.updateProduct(ProdcutRequestDTOMapper.toProductRequestDTO(el))
-//            }.flatMap { res ->
-//                ServerResponse
-//                    .ok()
-//                    .contentType(MediaType.APPLICATION_JSON)
-//                    .bodyValue(res)
-//            }.doOnError {
-//                logger.error("Error occurred while creating product " + serverRequest.uri())
-//            }.log()
-//
-//        }
-//    }
-
-//    fun deleteProduct(serverRequest: ServerRequest): Mono<ServerResponse> {
-//        return productService.deleteProduct(serverRequest)
-//            .toMono()
-//            .flatMap(ServerResponse.ok()::bodyValue)
-//    }
+    fun deleteProduct(serverRequest: ServerRequest): Mono<ServerResponse> {
+        return serverRequest.let {
+            val productId = it.pathVariable("productId")
+            productService.deleteProduct(productId)
+            ServerResponse
+                .ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue("ProductId: $productId")
+        }.doOnNext {
+            logger.info("Successfully deleted product!!")
+        }.doOnError {
+                logger.error("Error occurred while deleting the product")
+            }
+    }
 //
 //    fun getAllCategory(serverRequest: ServerRequest): Mono<ServerResponse> {
 //        return productService.findAllCatagory()

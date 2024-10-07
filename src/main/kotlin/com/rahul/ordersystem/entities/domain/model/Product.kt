@@ -6,8 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 @Document(collection = "Product")
 data class Product(
     @Id
-//    @field:JsonProperty("_id")
-    var productId: String? = null,
+    val productId: String? = null,
     val categoryName: String? = null,
     val createdDate: String? = null,
     val lastUpdated: String? = null,
@@ -15,6 +14,7 @@ data class Product(
 )
 
 data class Items(
+    val itemId: String? = null,
     val itemName: String? = null,
     val price: Float? = null,
     val isAvailable: Boolean? = null,

@@ -15,7 +15,7 @@ object ProductUseCaseMapper {
             Product(
                 productId = UUID.randomUUID().toString(),
                 categoryName = it.categoryName,
-                createdDate = LocalDateTime.now().toString(),
+                createdDate =  LocalDateTime.now().toString(),
                 lastUpdated = LocalDateTime.now().toString(),
                 items = getItem(productRequestDTO)
             )
@@ -28,6 +28,7 @@ object ProductUseCaseMapper {
             it.items?.forEach { el ->
                 productItemRequest.add(
                     Items(
+                        itemId = el.itemId,
                         itemName = el.itemName,
                         price = el.price,
                         isAvailable = el.isAvailable,

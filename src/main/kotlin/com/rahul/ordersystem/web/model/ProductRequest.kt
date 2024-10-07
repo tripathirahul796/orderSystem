@@ -10,6 +10,8 @@ data class ProductRequest(
 )
 
 data class ItemRequest(
+    @field:JsonProperty("itemId")
+    val itemId: String? = null,
     @field : JsonProperty("itemName")
     val itemName: String? = null,
     @field : JsonProperty("price")
@@ -23,6 +25,7 @@ data class ItemRequest(
     @field : JsonProperty("calories")
     val calories: Float? = null,
 )
+
 data class Ingredients(
     @field : JsonProperty("ingredientName")
     val ingredientName: String? = null,

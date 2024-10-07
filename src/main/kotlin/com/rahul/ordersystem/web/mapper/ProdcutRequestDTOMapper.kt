@@ -21,6 +21,7 @@ object ProductRequestDTOMapper {
             it.items?.forEach { el ->
                 productItemRequest.add(
                     ItemRequestDTO(
+                        itemId = el.itemId,
                         itemName = el.itemName,
                         price = el.price,
                         isAvailable = el.isAvailable,
