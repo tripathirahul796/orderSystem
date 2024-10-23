@@ -1,7 +1,6 @@
 package com.rahul.ordersystem.entities.domain.dto.response
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.rahul.ordersystem.web.model.Ingredients
 
 data class ProductResponseDTO(
     @field:JsonProperty("categoryName")
@@ -18,7 +17,7 @@ data class ItemResponseDTO(
     @field : JsonProperty("isAvailable")
     val isAvailable: Boolean? = null,
     @field : JsonProperty("ingredients")
-    val ingredients: List<Ingredients>? = null,
+    val ingredients: List<String>? = null,
     @field : JsonProperty("preparationTime")
     val preparationTime: String? = null,
     @field : JsonProperty("calories")

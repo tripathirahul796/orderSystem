@@ -1,8 +1,7 @@
 package com.rahul.ordersystem.web.handler
 
 import com.rahul.ordersystem.application.service.ProductService
-import com.rahul.ordersystem.web.mapper.ProductRequestDTOMapper
-import com.rahul.ordersystem.web.model.ProductRequest
+import com.rahul.ordersystem.web.model.request.ProductRequest
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
@@ -40,25 +39,22 @@ class ProductHandler(@Autowired val productService: ProductService) {
     }
 
     fun createUpdateProduct(serverRequest: ServerRequest): Mono<ServerResponse> {
-        return serverRequest.let {
-            val requestBody = it.bodyToMono(ProductRequest::class.java)
+        return serverRequest.let { req ->
+            val requestBody = req.bodyToMono(ProductRequest::class.java)
             requestBody.flatMap { el ->
-                productService.createUpdateProduct(ProductRequestDTOMapper.toProductRequestDTO(el))
+                productService.createUpdateProduct(el)
             }.flatMap { res ->
                 ServerResponse
                     .ok()
                     .contentType(MediaType.APPLICATION_JSON)
                     .bodyValue(res)
-            }.doOnNext {
-                logger.info("Product created successfully !!")
+            }.doOnError {
+                logger.error("Error occurred while creating product " + serverRequest.uri())
+                ServerResponse
+                    .badRequest()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .bodyValue(req)
             }
-                .doOnError {
-                    logger.error("Error occurred while creating product " + serverRequest.uri())
-                    ServerResponse
-                        .badRequest()
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .bodyValue(it)
-                }
         }
     }
 
@@ -73,8 +69,8 @@ class ProductHandler(@Autowired val productService: ProductService) {
         }.doOnNext {
             logger.info("Successfully deleted product!!")
         }.doOnError {
-                logger.error("Error occurred while deleting the product")
-            }
+            logger.error("Error occurred while deleting the product")
+        }
     }
 //
 //    fun getAllCategory(serverRequest: ServerRequest): Mono<ServerResponse> {
