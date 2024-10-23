@@ -2,7 +2,7 @@ package com.rahul.ordersystem.web.mapper
 
 import com.rahul.ordersystem.entities.domain.dto.request.ItemRequestDTO
 import com.rahul.ordersystem.entities.domain.dto.request.ProductRequestDTO
-import com.rahul.ordersystem.web.model.ProductRequest
+import com.rahul.ordersystem.web.model.request.ProductRequest
 
 object ProductRequestDTOMapper {
 

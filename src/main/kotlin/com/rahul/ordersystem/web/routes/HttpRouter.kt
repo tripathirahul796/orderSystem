@@ -9,7 +9,8 @@ import org.springframework.web.reactive.function.server.router
 
 @Configuration
 class HttpRouter(
-    private val productHttpRouter: ProductHttpRouter
+    private val productHttpRouter: ProductHttpRouter,
+    private  val customerHttpRouter: CustomerHttpRouter
 ) {
     @Bean
     fun route(): RouterFunction<ServerResponse> =
@@ -18,6 +19,7 @@ class HttpRouter(
             "/v1".nest {
                 accept(MediaType.APPLICATION_JSON).nest {
                     add(productHttpRouter.router())
+                    add(customerHttpRouter.router())
                 }
             }
         }

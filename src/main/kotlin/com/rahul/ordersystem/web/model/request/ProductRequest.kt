@@ -1,4 +1,4 @@
-package com.rahul.ordersystem.web.model
+package com.rahul.ordersystem.web.model.request
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -24,9 +24,4 @@ data class ItemRequest(
     val preparationTime: String? = null,
     @field : JsonProperty("calories")
     val calories: Float? = null,
-)
-
-data class Ingredients(
-    @field : JsonProperty("ingredientName")
-    val ingredientName: String? = null,
 )
